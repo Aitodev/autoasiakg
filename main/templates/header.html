@@ -607,18 +607,18 @@
                                                 <div class="container-mega">
                                                     <ul class="megamenu" data-transition="slide" data-animationtime="250">
                                                         <li class="home hover">
-                                                            <a href="index.html">Главная</a>
+                                                            <a href="{% url 'index' %}">Главная</a>
                                                         </li>
                                                         <li class="with-sub-menu hover">
                                                             <p class="close-menu"></p>
-                                                            <a href="about.html" class="clearfix">
+                                                            <a href="{% url 'about' %}" class="clearfix">
                                                                 <strong>О нас</strong>                                                          
                                                                 <b class="caret"></b>
                                                             </a>
                                                         </li>
                                                         <li class="with-sub-menu hover">
                                                             <p class="close-menu"></p>
-                                                            <a href="product.html " class="clearfix">
+                                                            <a href="{% url 'shop' %} " class="clearfix">
                                                                 <strong>Магазин</strong>
                                                                 <b class="caret"></b>
                                                             </a>
@@ -724,7 +724,7 @@
                                                         </li>
                                                         <li class="">
                                                             <p class="close-menu"></p>
-                                                            <a href="contact.html" class="clearfix">
+                                                            <a href="{% url 'contact' %}" class="clearfix">
                                                                 <strong>Контакты</strong>
                                                                 <span class="label"></span>
                                                             </a>

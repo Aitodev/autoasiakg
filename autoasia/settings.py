@@ -8,7 +8,7 @@ SECRET_KEY = 'ehcz-38(r75%hqew967u)y8=!)76@s*5h3@ag1r8d63mm8(qv^'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aitodev.pythonanywhere.com']
 
 
 

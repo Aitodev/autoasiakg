@@ -14,3 +14,13 @@ def index(request):
         'cart_product_form': cart_product_form,
     }
     return render(request, 'main/index.html', context)
+
+
+def about(request):
+    return render(request, 'main/about.html')
+
+def shop(request):
+    return render(request, 'main/product.html')
+
+def contact(request):
+    return render(request, 'main/contact.html')
