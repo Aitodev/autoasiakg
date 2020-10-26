@@ -4,7 +4,7 @@ from main.models import Bestproduct
 from django.views import View
 from .cart import Cart
 import telebot
-from .forms import CartAddProductForm, OrderSendForm
+from .forms import CartAddBestproductForm, OrderSendForm
 
 #1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04
 bot = telebot.TeleBot("1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04")
@@ -14,7 +14,7 @@ bot = telebot.TeleBot("1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04")
 def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Bestproduct, id=product_id)
-    form = CartAddProductForm(request.POST)
+    form = CartAddBestproductForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], update_quantity=cd['update'])
@@ -31,7 +31,7 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(
+        item['update_quantity_form'] = CartAddBestproductForm(
             initial={'quantity': item['quantity'],
                      'update': True})
     context = {

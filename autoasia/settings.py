@@ -1,16 +1,14 @@
 from pathlib import Path
 
 import os
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'ehcz-38(r75%hqew967u)y8=!)76@s*5h3@ag1r8d63mm8(qv^'
 
 DEBUG = True
 
 ALLOWED_HOSTS = ['aitodev.pythonanywhere.com', '127.0.0.1']
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'cart.apps.CartConfig',
+    'uploader.apps.UploaderConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,16 +52,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'autoasia.wsgi.application'
 
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -79,8 +74,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -90,8 +83,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

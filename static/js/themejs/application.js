@@ -499,7 +499,7 @@ function display(view) {
 	});
 
 /* ---------------------------------------------------
-	Page Product Detail
+	Page Bestproduct Detail
 -------------------------------------------------- */
 
 $(document).ready(function() {
@@ -560,7 +560,7 @@ $(document).ready(function() {
 		$(this).siblings("li").removeClass("active");
 		$(this).parent().find('.selected-option').html('<span class="label label-success">'+ $(this).find('img').data('original-title') +'</span>');
 	});
-	// Product detial reviews button
+	// Bestproduct detial reviews button
 	$(".reviews_button,.write_review_button").click(function (){
 		var tabTop = $(".producttab").offset().top;
 		$("html, body").animate({ scrollTop:tabTop }, 1000);
@@ -693,7 +693,7 @@ $(document).ready(function() {
 
 	
 	
-	// Product detial reviews button
+	// Bestproduct detial reviews button
 	$(".reviews_button,.write_review_button").click(function (){
 		var tabTop = $(".producttab").offset().top;
 		$("html, body").animate({ scrollTop:tabTop }, 1000);
