@@ -1,4 +1,4 @@
-from .models import Bestproduct, Category, Subcategory, Subcategory1, Brand, Automodel, Automodel1, Automodel2, Manufacturer, Product
+from .models import Bestproduct, Category, Subcategory, Subcategory1, Brand, Automodel, Manufacturer, Product
 from django.contrib import admin
 
 
@@ -25,6 +25,4 @@ admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Subcategory1)
 admin.site.register(Brand)
 admin.site.register(Automodel)
-admin.site.register(Automodel1)
-admin.site.register(Automodel2)
 admin.site.register(Manufacturer)

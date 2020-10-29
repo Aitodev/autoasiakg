@@ -39,22 +39,6 @@ class Automodel(models.Model):
         return self.name
 
 
-class Automodel1(models.Model):
-    automodel = models.ForeignKey(Automodel, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Automodel2(models.Model):
-    automodel1 = models.ForeignKey(Automodel1, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
 
@@ -88,8 +72,6 @@ class Product(models.Model):
     subcategory1 = models.ForeignKey(Subcategory1, on_delete=models.SET_NULL, blank=True, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, blank=True, null=True)
     automodel = models.ForeignKey(Automodel, on_delete=models.SET_NULL, blank=True, null=True)
-    automodel1 = models.ForeignKey(Automodel1, on_delete=models.SET_NULL, blank=True, null=True)
-    automodel2 = models.ForeignKey(Automodel2, on_delete=models.SET_NULL, blank=True, null=True)
     img = models.ImageField(verbose_name='Изображение', upload_to='static/img/bestproduct/', blank=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Цена', default=0)
     price_disc = models.DecimalField(verbose_name='Цена со скидкой', max_digits=7, decimal_places=2, null=True, blank=True)

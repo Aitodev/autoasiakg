@@ -1,4 +1,4 @@
-from main.models import Category, Subcategory, Subcategory1, Brand, Automodel, Automodel1, Automodel2, Manufacturer, Product
+from main.models import Category, Subcategory, Subcategory1, Brand, Automodel, Manufacturer, Product
 from uploader.forms import CsvUploadForm
 from uploader.models import UploadModel
 from django.shortcuts import redirect
@@ -46,9 +46,8 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                     subcategory = None
                                     subcategory1 = None
                                     brand = None
+                                    automodels = []
                                     automodel = None
-                                    automodel1 = None
-                                    automodel2 = None
                                     manufacturer = None
                                     category_str = str(sh.row(i)[keys['сategory']].value).strip()
                                     if Category.objects.filter(name=category_str).exists():
@@ -73,24 +72,15 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                             brand = Brand.objects.filter(name=brand_str).first()
                                         else:
                                             brand = Brand.objects.create(name=brand_str)
-                                    if 'automodel1' in keys and sh.row(i)[keys['automodel1']].value and brand:
-                                        automodel_str = str(sh.row(i)[keys['automodel1']].value).strip()
-                                        if Automodel.objects.filter(name=automodel_str).exists():
-                                            automodel = Automodel.objects.filter(name=automodel_str).first()
-                                        else:
-                                            automodel = Automodel.objects.create(name=automodel_str, brand=brand)
-                                    if 'automodel2' in keys and sh.row(i)[keys['automodel2']].value and automodel:
-                                        automodel1_str = str(sh.row(i)[keys['automodel2']].value).strip()
-                                        if Automodel1.objects.filter(name=automodel1_str).exists():
-                                            automodel1 = Automodel1.objects.filter(name=automodel1_str).first()
-                                        else:
-                                            automodel1 = Automodel1.objects.create(name=automodel1_str, automodel=automodel)
-                                    if 'automodel3' in keys and sh.row(i)[keys['automodel3']].value and automodel1:
-                                        automodel2_str = str(sh.row(i)[keys['automodel3']].value).strip()
-                                        if Automodel2.objects.filter(name=automodel2_str).exists():
-                                            automodel2 = Automodel2.objects.filter(name=automodel2_str).first()
-                                        else:
-                                            automodel2 = Automodel2.objects.create(name=automodel2_str, automodel1=automodel1)
+                                    automodels_str = [model_str for model_str in keys if 'automodel' in model_str]
+                                    for model_str in automodels_str:
+                                        if sh.row(i)[keys[model_str]].value and brand:
+                                            automodel_str = str(sh.row(i)[keys[model_str]].value).strip()
+                                            if Automodel.objects.filter(name=automodel_str).exists():
+                                                automodel = Automodel.objects.filter(name=automodel_str).first()
+                                            else:
+                                                automodel = Automodel.objects.create(name=automodel_str, brand=brand)
+                                        automodels.append(automodel)
                                     if 'manufacturer' in keys and sh.row(i)[keys['manufacturer']].value:
                                         manufacturer_str = str(sh.row(i)[keys['manufacturer']].value).strip()
                                         if Manufacturer.objects.filter(name=manufacturer_str).exists():
@@ -102,9 +92,13 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                     description = str(sh.row(i)[keys['shortdescription']].value).strip() if 'shortdescription' in keys else None
                                     price = str(sh.row(i)[keys['price']].value).strip() if 'price' in keys else None
                                     if name:
-                                        Product.objects.create(name=name, description=description, product_code=code, category=category, price=price,
-                                                               manufacturer=manufacturer, subcategory=subcategory, subcategory1=subcategory1,
-                                                               brand=brand, automodel=automodel, automodel1=automodel1, automodel2=automodel2)
+                                        if automodels:
+                                            for automodel in automodels:
+                                                Product.objects.create(name=name, description=description, product_code=code, category=category, price=price, manufacturer=manufacturer,
+                                                                       subcategory=subcategory, subcategory1=subcategory1, brand=brand, automodel=automodel)
+                                        else:
+                                            Product.objects.create(name=name, description=description, product_code=code, category=category, price=price, manufacturer=manufacturer,
+                                                                   subcategory=subcategory, subcategory1=subcategory1, brand=brand, automodel=automodel)
                     except Exception as e:
                         raise e
                 elif str(file).split('.')[-1] == 'csv':
@@ -115,8 +109,7 @@ class CsvUploadAdmin(admin.ModelAdmin):
                             subcategory1 = None
                             brand = None
                             automodel = None
-                            automodel1 = None
-                            automodel2 = None
+                            automodels = []
                             manufacturer = None
                             if Category.objects.filter(name=str(row['Сategory']).strip()).exists():
                                 category = Category.objects.filter(name=str(row['Сategory']).strip()).first()
@@ -142,16 +135,19 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                     automodel = Automodel.objects.filter(name=str(row['Automodel1']).strip()).first()
                                 else:
                                     automodel = Automodel.objects.create(name=str(row['Automodel1']).strip(), brand=brand)
+                                automodels.append(automodel)
                             if row['Automodel2']:
                                 if Automodel1.objects.filter(name=str(row['Automodel2']).strip()).exists():
-                                    automodel1 = Automodel1.objects.filter(name=str(row['Automodel2']).strip()).first()
+                                    automodel1 = Automodel.objects.filter(name=str(row['Automodel2']).strip()).first()
                                 else:
-                                    automodel1 = Automodel1.objects.create(name=str(row['Automodel2']).strip(), automodel=automodel)
+                                    automodel1 = Automodel.objects.create(name=str(row['Automodel2']).strip(), brand=brand)
+                                automodels.append(automodel1)
                             if row['Automodel3']:
                                 if Automodel2.objects.filter(name=str(row['Automodel3']).strip()).exists():
-                                    automodel2 = Automodel2.objects.filter(name=str(row['Automodel3']).strip()).first()
+                                    automodel2 = Automodel.objects.filter(name=str(row['Automodel3']).strip()).first()
                                 else:
-                                    automodel2 = Automodel2.objects.create(name=str(row['Automodel3']).strip(), automodel1=automodel1)
+                                    automodel2 = Automodel.objects.create(name=str(row['Automodel3']).strip(), brand=brand)
+                                automodels.append(automodel2)
                             if row['manufacturer']:
                                 if Manufacturer.objects.filter(name=str(row['manufacturer']).strip()).exists():
                                     manufacturer = Manufacturer.objects.filter(name=str(row['manufacturer']).strip()).first()
@@ -162,9 +158,13 @@ class CsvUploadAdmin(admin.ModelAdmin):
                             description = str(row['Shortdescription']).strip()
                             price = Decimal(row['Price'].replace(',', '').strip())
                             if name:
-                                Product.objects.create(name=name, description=description, product_code=code, category=category, price=price,
-                                                       manufacturer=manufacturer, subcategory=subcategory, subcategory1=subcategory1,
-                                                       brand=brand, automodel=automodel, automodel1=automodel1, automodel2=automodel2)
+                                if automodels:
+                                    for automodel in automodels:
+                                        Product.objects.create(name=name, description=description, product_code=code, category=category, price=price, automodel=automodel,
+                                                               manufacturer=manufacturer, subcategory=subcategory, subcategory1=subcategory1, brand=brand)
+                                else:
+                                    Product.objects.create(name=name, description=description, product_code=code, category=category, price=price, automodel=automodel,
+                                                           manufacturer=manufacturer, subcategory=subcategory, subcategory1=subcategory1, brand=brand)
         return redirect("..")
 
 
@@ -209,3 +209,9 @@ admin.site.register(UploadModel, CsvUploadAdmin)
 # Product.objects.create(name=name, description=description, product_code=code, category=category, price=price,
 #                        manufacturer=manufacturer, subcategory=subcategory, subcategory1=subcategory1,
 #                        brand=brand, automodel=automodel, automodel1=automodel1, automodel2=automodel2)
+# if 'automodel1' in keys and sh.row(i)[keys['automodel1']].value and brand:
+#     automodel_str = str(sh.row(i)[keys['automodel1']].value).strip()
+#     if Automodel.objects.filter(name=automodel_str).exists():
+#         automodel = Automodel.objects.filter(name=automodel_str).first()
+#     else:
+#         automodel = Automodel.objects.create(name=automodel_str, brand=brand)
