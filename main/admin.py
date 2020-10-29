@@ -13,10 +13,15 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'subcategory', 'brand', 'manufacturer')
 
 
+class SubcategoryAdmin(admin.ModelAdmin):
+    search_fields = ('name', 'category',)
+    list_filter = ('category',)
+
+
 admin.site.register(Bestproduct, BestproductConfig)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)
-admin.site.register(Subcategory)
+admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Subcategory1)
 admin.site.register(Brand)
 admin.site.register(Automodel)
