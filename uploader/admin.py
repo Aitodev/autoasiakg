@@ -137,13 +137,13 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                     automodel = Automodel.objects.create(name=str(row['Automodel1']).strip(), brand=brand)
                                 automodels.append(automodel)
                             if row['Automodel2']:
-                                if Automodel1.objects.filter(name=str(row['Automodel2']).strip()).exists():
+                                if Automodel.objects.filter(name=str(row['Automodel2']).strip()).exists():
                                     automodel1 = Automodel.objects.filter(name=str(row['Automodel2']).strip()).first()
                                 else:
                                     automodel1 = Automodel.objects.create(name=str(row['Automodel2']).strip(), brand=brand)
                                 automodels.append(automodel1)
                             if row['Automodel3']:
-                                if Automodel2.objects.filter(name=str(row['Automodel3']).strip()).exists():
+                                if Automodel.objects.filter(name=str(row['Automodel3']).strip()).exists():
                                     automodel2 = Automodel.objects.filter(name=str(row['Automodel3']).strip()).first()
                                 else:
                                     automodel2 = Automodel.objects.create(name=str(row['Automodel3']).strip(), brand=brand)
