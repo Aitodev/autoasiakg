@@ -7,7 +7,6 @@ from django.views import View
 from cart.cart import Cart
 import telebot
 
-
 bot = telebot.TeleBot("1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04")
 
 
@@ -36,33 +35,41 @@ def shop(request):
 def contact(request):
     return render(request, 'main/contact.html')
 
+
 def automodels(request, brand_pk):
     automodels = Automodel.objects.filter(brand_id=brand_pk)
     context = {
-    'automodels': automodels, 
-    'brand_pk': brand_pk, 
+        'automodels': automodels,
+        'brand_pk': brand_pk,
     }
     return render(request, 'main/automodels.html', context)
+
 
 def category(request, brand_pk, model_pk):
     categories = Category.objects.all()
     context = {
-    'categories': categories,
-    'brand_pk': brand_pk, 
-    'model_pk': model_pk,
+        'categories': categories,
+        'brand_pk': brand_pk,
+        'model_pk': model_pk,
     }
     return render(request, 'main/categories.html', context)
 
 
 def products(request, brand_pk, model_pk, category_pk):
-    products = Product.objects.filter(brand_id=brand_pk, automodel_id=model_pk, category_id=category_pk)
+    category = Category.objects.filter(id=category_pk)
+    if category.exists():
+        if not category.first().depends_on_brands:
+            products = Product.objects.filter(category_id=category_pk)
+        else:
+            products = Product.objects.filter(brand_id=brand_pk, automodel_id=model_pk, category_id=category_pk)
     context = {
-    'products':products, 
-    'brand_pk': brand_pk, 
-    'model_pk': model_pk,
-    'category_pk': category_pk, 
+        'products': products,
+        'brand_pk': brand_pk,
+        'model_pk': model_pk,
+        'category_pk': category_pk,
     }
     return render(request, 'main/products.html', context)
+
 
 def product_view(request, product_pk):
     brands = Brand.objects.all()
@@ -77,6 +84,7 @@ def product_view(request, product_pk):
         'cart': cart,
     }
     return render(request, 'main/product.html', context)
+
 
 class ApplicationsView(View):
     def post(self, request):

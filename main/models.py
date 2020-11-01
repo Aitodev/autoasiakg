@@ -3,6 +3,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    depends_on_brands = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -77,7 +78,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Цена', default=0)
     price_disc = models.DecimalField(verbose_name='Цена со скидкой', max_digits=7, decimal_places=2, null=True, blank=True)
     new = models.BooleanField(verbose_name='В наличии', default=False)
-    best_product = models.BooleanField(verbose_name='Лучший продукт(продаваемый)' ,default=False)
+    best_product = models.BooleanField(verbose_name='Лучший продукт(продаваемый)', default=False)
     date = models.DateTimeField(verbose_name='Дата добавления', auto_now_add=True)
 
     def __str__(self):
