@@ -94,6 +94,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'main/media')
 #     os.path.join(BASE_DIR, 'static/'),
 # )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST_USER = 'assassinaltair@bk.ru'
+EMAIL_HOST_PASSWORD = 'SdSn75YeaL'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'no-reply@bindoors.ru'
+DEFAULT_TO_EMAIL = 'alexthemaggot23@gmail.com'
+
 
 CART_SESSION_ID = 'cart'
 

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-from main.models import Bestproduct
+from main.models import Bestproduct, Product
 from django.views import View
 from .cart import Cart
 import telebot
-from .forms import CartAddBestproductForm, OrderSendForm
+from .forms import CartAddProductForm, OrderSendForm
 
 #1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04
 bot = telebot.TeleBot("1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04")
@@ -13,8 +13,8 @@ bot = telebot.TeleBot("1387522266:AAHTqKbJzHhhwqwsi7-q8oCD-cxKMwj4k04")
 @require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
-    product = get_object_or_404(Bestproduct, id=product_id)
-    form = CartAddBestproductForm(request.POST)
+    product = get_object_or_404(Product, id=product_id)
+    form = CartAddProductForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], update_quantity=cd['update'])
@@ -23,7 +23,7 @@ def cart_add(request, product_id):
 
 def cart_remove(request, product_id):
     cart = Cart(request)
-    product = get_object_or_404(Bestproduct, id=product_id)
+    product = get_object_or_404(Product,  id=product_id)
     cart.remove(product)
     return redirect('cart:cart_detail')
 
@@ -31,7 +31,7 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     for item in cart:
-        item['update_quantity_form'] = CartAddBestproductForm(
+        item['update_quantity_form'] = CartAddProductForm(
             initial={'quantity': item['quantity'],
                      'update': True})
     context = {
@@ -78,5 +78,5 @@ class OrderSendView(View):
 
                 bot.send_message(-387514692, message)
                 Cart.clear(cart)
-                return redirect('index')
-            return redirect('index')
+                return redirect('main:index')
+            return redirect('main:index')

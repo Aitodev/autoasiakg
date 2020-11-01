@@ -82,7 +82,11 @@
                         		{% for item in cart %}
                             	{% with product=item.product %}
 								  <tr>
-									<td class="text-center"><a href="product.html"><img width="60px" src="{{ product.img.url }}" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail"></a></td>
+									<td class="text-center"><a href="product.html">
+										{% if product.img %}
+										<img width="60px" src="{{ product.img.url }}" alt="Xitefun Causal Wear Fancy Shoes" title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail">
+										{% endif %}
+									</a></td>
 									<td class="text-left"><a href="product.html">{{ product.name }}	</a></td>
 									<td class="text-left"><div class="input-group btn-block" style="min-width: 100px;">
 										<input type="text" name="quantity" value="1" size="1" class="form-control">

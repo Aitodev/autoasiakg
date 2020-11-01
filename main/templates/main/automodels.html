@@ -1,0 +1,548 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+
+<body class="common-home res layout-1">
+    
+    <div id="wrapper" class="wrapper-fluid banners-effect-5">
+    
+
+    {% include 'header.html' %}
+    
+   
+<!-- Main Container  -->
+<div class="main-container">
+    <div id="content">
+        <!-- <div class="content-top-w container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 col_slla  box-advanced-search">
+                    <div class="so_advanced_search">
+                        <div class="sas_wrap">
+                            <div class="sas_inner">
+                                <div class="heading-title"><h2>Фильтрация</h2></div>
+                                <div class="sas_inner-box-search">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="make" id="so_make0" class="form-control">
+                                                <option value="">Выберите производителя</option>
+                                                    <option value="1" >Acura</option>
+                                                    <option value="2" >BMW</option>
+                                                    <option value="3" >Chevrolet</option>
+                                                    <option value="4" >GMC</option>
+                                                    <option value="5" >Honda</option>
+                                                    <option value="6" >John deere</option>
+                                                    <option value="7" >Kawasaky</option>
+                                                    <option value="8" >Lexus</option>
+                                                    <option value="9" >mazda</option>
+                                                    <option value="10" >Mercedes</option>
+                                                    <option value="11" >nuko</option>
+                                                    <option value="12" >Opel</option>
+                                                    <option value="13" >Yamaha</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="model" id="so_model0" class="form-control">
+                                                <option value="">Выберите модель</option>
+                                                <option value="1" >3D Model</option>
+                                                <option value="2" >BMW</option>
+                                                <option value="3" >1000 Rocket</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="engine" id="so_engine0" class="form-control">
+                                                <option value="">Выберите пакет</option>
+                                                <option value="1" >320i</option>
+                                                <option value="2" >x5</option>
+                                                <option value="3" >350i</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+                                            <select name="year" id="so_year0" class="form-control">
+                                                <option value="">Выберите год</option>
+                                                    <option value="1" >2015</option>
+                                                    <option value="2" >2016</option>
+                                                    <option value="3" >2017</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-button">
+                                            <button type="button" id="sas_search_button0">Найти мою машину!</button>
+                                        </div>
+                                    </div>              
+                                </div>
+                            </div>   
+                        </div>
+                    </div> 
+                </div>
+                    
+            </div>                                   
+        </div> -->
+        <table style="width: 80%; margin-left: auto; margin-right: auto; margin-top: 40px;" border="0" cols="4"> 
+            <tbody> 
+               
+                <tr style="display: flex; justify-content: space-evenly; flex-wrap: wrap;"> 
+                     {% for model in automodels %}
+                    <td style="width: 30%;">
+                        <li><a href="{% url 'main:category' brand_pk model.id %}">{{ model.name }}</a></li>
+                    </td>
+                      {% endfor %} 
+                    </tr>  
+                    
+                </tbody> 
+            </table>
+        <div class="content-main-w">
+            <div class="container">
+                <!-- Extra Best seller -->
+                <div class="module extra-layout1">
+                    <div class="pre_text">
+                        Топовые продукты  
+                    </div>                 
+                    <h3 class="modtitle"><span>Лучшие продукты</span></h3>
+                    <div class="modcontent">
+                        <div id="so_extra_slider_11" class="so-extraslider button-type1">
+                            <div class="products-list yt-content-slider extraslider-inner" data-rtl="yes" data-pagination="no" data-arrows="no" data-autoplay="no" data-delay="4" data-speed="0.6" data-margin="30" data-items_column00="4" data-items_column0="4" data-items_column1="3" data-items_column2="3" data-items_column3="2" data-items_column4="1" data-lazyload="yes" data-loop="no" data-buttonpage="top">
+                                <div class="item">
+                                {% for b in best %}
+                                    <div class="product-layout product-grid">                                               
+                                        <div class="product-item-container item--static">
+                                            <div class="left-block">
+                                                <div class="product-image-container second_img">
+                                                    <a href="product.html" target="_self" title="Volup tatem accu">
+                                                        <img src="{{ b.img.url }}" class="img-1 img-responsive" alt="image1">
+                                                        {% comment %} <img src="{% static 'image/catalog/demo/product/270/2.jpg' %}" class="img-2 img-responsive" alt="image2"> {% endcomment %}
+                                                    </a>
+                                                </div>
+                                                <span class="label-product label-new">
+                                                {% if b.new == True %}
+                                                Новый
+                                                {% endif %}
+                                                 </span>
+                                                <!--quickview--> 
+                                                <div class="so-quickview">
+                                                  <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Детально</span></a>
+                                                </div>                                                     
+                                                <!--end quickview-->
+                                            </div>
+                                            <div class="right-block">
+                                                <div class="button-group cartinfo--static">
+                                                <form action="{% url 'cart:cart_add' b.id %}" method="POST">
+                                                    {% csrf_token %}
+                                                        {{ cart_product_form }}
+                                                    <button type="submit" class="addToCart" title="Добавить в корзину" onclick="cart.add('60 ');">
+                                                        <span>Добавить в корзину</span>
+                                                    </button>  
+
+                                                    <form>                                               
+                                                </div>
+                                                <h4><a href="product.html" title="Volup tatem accu" target="_self">{{ b.name }}</a></h4>
+                                                <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                </div>
+                                                <div class="price">
+                                                {% if b.price_disc %}
+                                                  <span class="price-new">{{ b.price }}сом</span>
+                                                   <span class="price-old">{{ b.price_disc }}сом</span>
+                                                   {% else %}
+                                                   <span class="price-new">{{ b.price }}сом</span>
+                                                   {% endif %}
+                                                </div>
+                                            </div>                                            
+                                        </div>                                            
+                                    </div>
+                                {% endfor %} 
+                                    
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Extra best seller -->
+            </div>
+
+            <!-- Deals -->
+            <div class="row-image deals-w">
+                <div class="container row row-deals">
+                    <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                        <div class="module deals-layout1">
+                            <h3 class="modtitle2"><span>Товар дня</span></h3>
+                            <div class="modcontent">
+                                <div id="so_deal_11" class="so-deal">
+                                    <div class="products-list yt-content-slider extraslider-inner" data-rtl="yes" data-pagination="no" data-arrows="no" data-autoplay="no" data-delay="4" data-speed="0.6" data-margin="30" data-items_column00="1" data-items_column0="1" data-items_column1="1" data-items_column2="1" data-items_column3="1" data-items_column4="1" data-lazyload="yes" data-loop="no" data-buttonpage="top">
+                                        <div class="item product-layout">
+                                            <div class="product-thumb transition product-item-container">
+                                                <div class="col-lg-6 col-md-5 col-sm-6 col-xs-12 col-left">
+                                                    <div class="left-block">
+                                                        <div class="product-image-container second_img">
+                                                            <a href="product.html" target="_self" title="Sunt in culpa">
+                                                                <img src="{% static 'image/catalog/demo/product/400/1.jpg' %}" class="img-1 img-responsive" alt="image1">
+                                                                <img src="{% static 'image/catalog/demo/product/400/2.jpg' %}" class="img-2 img-responsive" alt="image2">
+                                                            </a>
+                                                        </div>
+                                                        <div class="so-quickview">
+                                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12 col-right">
+                                                    <div class="right-block">
+                                                        <h4><a href="product.html" title="Sunt in culpa" target="_self">Sunt in culpa back wheel</a></h4>
+                                                        <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                        </div>
+                                                        <div class="price">
+                                                            <span class="price-Новинка">10.890сом</span>
+                                                            <span class="price-old">11900сом</span>
+                                                        </div>
+                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ..</p>
+                                                        <div class="button-group">
+                                                            <button type="button" class="addToCart" title="Добавить в корзину" onclick="cart.add('60 ');">
+                                                                <span>Добавить в корзину </span>   
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Deals -->
+
+            <div class="container">
+                <!-- Extra Новинка arrivals -->
+                <div class="module extra-layout1">
+                    <div class="pre_text">
+                        Топ товары недели             
+                    </div>                 
+                    <h3 class="modtitle"><span>Новинка в товарах</span></h3>
+                    <div class="modcontent">
+                        <div id="so_extra_slider_12" class="so-extraslider button-type1">
+                            <div class="products-list yt-content-slider extraslider-inner" data-rtl="yes" data-pagination="no" data-arrows="no" data-autoplay="no" data-delay="4" data-speed="0.6" data-margin="30" data-items_column00="4" data-items_column0="4" data-items_column1="3" data-items_column2="3" data-items_column3="2" data-items_column4="1" data-lazyload="yes" data-loop="no" data-buttonpage="top">
+                                <div class="item">
+                                    <div class="product-layout product-grid">         
+                                        <div class="item-inner product-layout transition product-grid">
+                                            <div class="product-item-container item--static">
+                                                <div class="left-block">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="product.html" target="_self" title="DPicanha porkcho">
+                                                            <img src="{% static 'image/catalog/demo/product/270/1.jpg' %}" class="img-1 img-responsive" alt="image1">
+                                                            <img src="{% static 'image/catalog/demo/product/270/3.jpg' %}" class="img-2 img-responsive" alt="image2">
+                                                        </a>
+                                                    </div>
+                                                    <span class="label-product label-new">Новинка</span>
+                                                    <!--quickview--> 
+                                                    <div class="so-quickview">
+                                                      <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                                    </div>                                                     
+                                                    <!--end quickview-->
+                                                </div>
+                                                <div class="right-block">
+                                                    <div class="button-group cartinfo--static">                                                
+                                                        <button type="button" class="addToCart" title="Добавить в корзину" onclick="cart.add('60 ');">
+                                                            <span>Добавить в корзину </span>   
+                                                        </button>                                                   
+                                                    </div>
+                                                    <h4><a href="product.html" title="Picanha porkcho" target="_self">Picanha porkcho</a></h4>
+                                                    <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                    </div>
+                                                    <div class="price">
+                                                      <span class="price">1990сом</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="product-layout product-grid">         
+                                        <div class="item-inner product-layout transition product-grid">
+                                            <div class="product-item-container item--static">
+                                                <div class="left-block">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="product.html" target="_self" title="Stickrum bresao">
+                                                            <img src="{% static 'image/catalog/demo/product/270/3.jpg' %}" class="img-1 img-responsive" alt="image1">
+                                                            <img src="{% static 'image/catalog/demo/product/270/4.jpg' %}" class="img-2 img-responsive" alt="image2">
+                                                        </a>
+                                                    </div>
+                                                    <span class="label-product label-sale">-11%</span>
+                                                    <!--quickview--> 
+                                                    <div class="so-quickview">
+                                                      <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                                    </div>                                                     
+                                                    <!--end quickview-->
+                                                </div>
+                                                <div class="right-block">
+                                                    <div class="button-group cartinfo--static">
+                                                        <button type="button" class="addToCart" title="Добавить в корзину" onclick="cart.add('60 ');">
+                                                            <span>Добавить в корзину </span>   
+                                                        </button>                                                  
+                                                    </div>
+                                                    <h4><a href="product.html" title="Stickrum bresao" target="_self">Stickrum bresao</a></h4>
+                                                    <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                    </div>
+                                                    <div class="price">
+                                                        <span class="price-Новинка">3400сом</span>
+                                                        <span class="price-old">4000сом</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
+                                    </div>                        
+                                </div>
+                                <div class="item">
+                                    <div class="product-layout product-grid">         
+                                        <div class="item-inner product-layout transition product-grid">
+                                            <div class="product-item-container item--static">
+                                                <div class="left-block">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="product.html" target="_self" title="Remporum stick">
+                                                            <img src="{% static 'image/catalog/demo/product/270/9.jpg' %}" class="img-1 img-responsive" alt="image1">
+                                                            <img src="{% static 'image/catalog/demo/product/270/6.jpg' %}" class="img-2 img-responsive" alt="image2">
+                                                        </a>
+                                                    </div>
+                                                    <span class="label-product label-new">Новинка</span>
+                                                    <!--quickview--> 
+                                                    <div class="so-quickview">
+                                                      <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                                    </div>                                                     
+                                                    <!--end quickview-->
+                                                </div>
+                                                <div class="right-block">
+                                                    <div class="button-group cartinfo--static">
+                                                        
+                                                        
+                                                        <button type="button" class="addToCart" title="Добавить в корзину" onclick="cart.add('60 ');">
+                                                            <span>Добавить в корзину </span>   
+                                                        </button>                                                 
+                                                    </div>
+                                                    <h4><a href="product.html" title="Remporum stick" target="_self">Remporum stick</a></h4>
+                                                    <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                    </div>
+                                                    <div class="price">
+                                                      <span class="price">5400сом</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
+                                    </div>                                                        
+                                </div>
+                                <div class="item">                                
+                                    <div class="product-layout product-grid">         
+                                        <div class="item-inner product-layout transition product-grid">
+                                            <div class="product-item-container item--static">
+                                                <div class="left-block">
+                                                    <div class="product-image-container second_img">
+                                                        <a href="product.html" target="_self" title="Duis aute irure ">
+                                                            <img src="{% static 'image/catalog/demo/product/270/9.jpg' %}" class="img-1 img-responsive" alt="image1">
+                                                            <img src="{% static 'image/catalog/demo/product/270/10.jpg' %}" class="img-2 img-responsive" alt="image2">
+                                                        </a>
+                                                    </div>
+                                                    
+                                                    <!--quickview--> 
+                                                    <div class="so-quickview">
+                                                      <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
+                                                    </div>                                                     
+                                                    <!--end quickview-->
+                                                </div>
+                                                <div class="right-block">
+                                                    <div class="button-group cartinfo--static">
+                                                        
+                                                        
+                                                        <button type="button" class="addToCart" title="Добавить в корзину" onclick="cart.add('60 ');">
+                                                            <span>Добавить в корзину </span>   
+                                                        </button>                                                   
+                                                    </div>
+                                                    <h4><a href="product.html" title="Volup tatem accu" target="_self">Volup tatem accu</a></h4>
+                                                    <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
+                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                    </div>
+                                                    <div class="price">
+                                                       <span class="price">3700сом</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Extra Новинка arrivals -->
+                
+            </div>
+            <!-- So Categories -->
+            <div class="row-cates">
+                <div id="so_categories_11" class="so-categories module theme2 cates-layout1 container preset01-3 preset02-2 preset03-2 preset04-2 preset05-1">
+                    <div class="pre_text">
+                        Купите товары по категориям           
+                    </div>
+                    <h3 class="modtitle"><span>Купить по категориям</span></h3>
+                    <div class="modcontent">
+                        <div class="cat-wrap theme2">
+                            <div class="content-box">
+                                <div class="inner">
+                                    <div class="parent-cat">
+                                        <div class="image-cat">
+                                            <a href="index.html#"><img src="{% static 'image/catalog/demo/category/cate1.jpg' %}" alt="image" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="cat-title"><a href="index.html#">Wheels & Tires</a></div>
+                                    <div class="child-cat">                  
+                                        <div class="child-cat-title"><a href="index.html#">Tires</a></div>
+                                        <div class="child-cat-title"><a href="index.html#">Tires Chains</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Tires Accessories</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Wheels</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Wheels Accessories</a></div> 
+                                        <a class="viewmore" href="index.html#">Посмотреть</a>                                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-box">
+                                <div class="inner">
+                                    <div class="parent-cat">
+                                        <div class="image-cat">
+                                            <a href="index.html#"><img src="{% static 'image/catalog/demo/category/cate2.jpg' %}">
+                                        </div>
+                                    </div>
+                                    <div class="cat-title"><a href="index.html#">Smart devices</a></div>
+                                    <div class="child-cat">                  
+                                        <div class="child-cat-title"><a href="index.html#">Bluetooth Devices </a></div>
+                                        <div class="child-cat-title"><a href="index.html#">Dash Cam</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Screen TV</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Smartwatch</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">USB Connect</a></div> 
+                                        <a class="viewmore" href="index.html#">Посмотреть</a>                                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-box">
+                                <div class="inner">
+                                    <div class="parent-cat">
+                                        <div class="image-cat">
+                                            <a href="index.html#"><img src="{% static 'image/catalog/demo/category/cate3.jpg' %}" alt="image" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="cat-title"><a href="index.html#">Oil Fluids</a></div>
+                                    <div class="child-cat">                  
+                                        <div class="child-cat-title"><a href="index.html#">Esdipiscing</a></div>
+                                        <div class="child-cat-title"><a href="index.html#">Reprehenderit</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Duis aute</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Deserunt mollit</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Laudantium</a></div> 
+                                        <a class="viewmore" href="index.html#">Посмотреть</a>                                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-box">
+                                <div class="inner">
+                                    <div class="parent-cat">
+                                        <div class="image-cat">
+                                            <a href="index.html#"><img src="{% static 'image/catalog/demo/category/cate4.jpg' %}" alt="image" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="cat-title"><a href="index.html#">Lighting</a></div>
+                                    <div class="child-cat">                  
+                                        <div class="child-cat-title"><a href="index.html#">LED Tail Lights</a></div>
+                                        <div class="child-cat-title"><a href="index.html#">Headlights</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Aspering</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Interior Light</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Consectetur</a></div> 
+                                        <a class="viewmore" href="index.html#">Посмотреть</a>                                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-box">
+                                <div class="inner">
+                                    <div class="parent-cat">
+                                        <div class="image-cat">
+                                            <a href="index.html#"><img src="{% static 'image/catalog/demo/category/cate5.jpg' %}" alt="image" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="cat-title"><a href="index.html#">Replacement Parts</a></div>
+                                    <div class="child-cat">                  
+                                        <div class="child-cat-title"><a href="index.html#">Lighting & Electical</a></div>
+                                        <div class="child-cat-title"><a href="index.html#">Brake Parts</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Shock & Suspension</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Outerwear</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Exhaust & Emission</a></div> 
+                                        <a class="viewmore" href="index.html#">Посмотреть</a>                                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-box">
+                                <div class="inner">
+                                    <div class="parent-cat">
+                                        <div class="image-cat">
+                                            <a href="index.html#"><img src="{% static 'image/catalog/demo/category/cate6.jpg' %}" alt="image" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="cat-title"><a href="index.html#">Tool & equipments</a></div>
+                                    <div class="child-cat">                  
+                                        <div class="child-cat-title"><a href="index.html#">Tool Boxes</a></div>
+                                        <div class="child-cat-title"><a href="index.html#">Tool Sets</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Impact Wrenches</a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Tire Air Compressors </a></div>   
+                                        <div class="child-cat-title"><a href="index.html#">Hand Tools</a></div> 
+                                        <a class="viewmore" href="index.html#">Посмотреть</a>                                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end So Categories -->
+
+            <div class="container">
+                <div class="slider-brands module">
+                    <div class="pre_text">У кого мы берем продукцию?</div>
+                    <h3 class="modtitle"><span>Самые топовые бренды!</span></h3>
+                    
+                    <div class="yt-content-slider contentslider" data-rtl="no" data-loop="yes" data-autoplay="no" data-autoheight="no" data-autowidth="no" data-delay="4" data-speed="0.6" data-margin="0" data-items_column00="6" data-items_column0="6" data-items_column1="5" data-items_column2="3" data-items_column3="2" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-hoverpause="yes">
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b1.jpg' %}" alt="brand"></a></div>
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b2.jpg' %}" alt="brand"></a></div>
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b3.jpg' %}" alt="brand"></a></div>
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b4.jpg' %}" alt="brand"></a></div>
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b5.jpg' %}" alt="brand"></a></div>
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b6.jpg' %}" alt="brand"></a></div>
+                        <div class="item"><a href="index.html#"><img src="{% static 'image/catalog/brands/b3.jpg' %}" alt="brand"></a></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% include 'footer.html' %}
+
+    </div>
+</body>
+{% endblock %}

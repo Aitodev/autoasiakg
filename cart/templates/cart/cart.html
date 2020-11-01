@@ -38,7 +38,12 @@
                         {% for item in cart %}
                             {% with product=item.product %}
                   <tr>
-                    <td class="text-center"><a href="product.html"><img width="70px" src="{{ product.img.url }}" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" /></a></td>
+                    <td class="text-center"><a href="product.html">
+                      {% if product.img %}
+                      <img width="70px" src="{{ product.img.url }}" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-thumbnail" />
+                      {% endif %}
+                    </a></td>
+                      }
                     <td class="text-left"><a href="product.html">{{ product.name }}</a><br />
                      </td>
                     <td class="text-left">По умолчанию</td>
@@ -79,7 +84,7 @@
 		</div>
 
 		 <div class="buttons">
-            <div class="pull-left"><a href="{% url 'index' %}" class="btn btn-primary">Продолжить покупки</a></div>
+            <div class="pull-left"><a href="{% url 'main:index' %}" class="btn btn-primary">Продолжить покупки</a></div>
             <div class="pull-right"><a href="order" class="btn btn-primary">Оформить</a></div>
           </div>
         </div>

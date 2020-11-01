@@ -13,9 +13,9 @@
     <!-- Main Container  -->
     <div class="main-container container">
         <ul class="breadcrumb">
-            <li><a href="product-v2.html#"><i class="fa fa-home"></i></a></li>
-            <li><a href="product-v2.html#">Smartphone & Tablets</a></li>
-            <li><a href="product-v2.html#">Chicken swinesha</a></li>
+            <li><a href="{% url 'main:index' %}"><i class="fa fa-home"></i></a></li>
+            <li><a href="product-v2.html#">Детальная страница продуктов</a></li>
+            <li><a href="product-v2.html#">{{ product.name }}</a></li>
         </ul>
         
         <div class="row">
@@ -28,50 +28,56 @@
                         <div class="row">
                             <div class="content-product-right col-md-6 col-sm-12 col-xs-12">
                                 <div class="title-product">
-                                    <h1>ДВИГАТЕЛЬ BMW S54B32</h1>
+                                    <h1>{{ product.name }}</h1>
                                 </div>
                                 <!-- Review ---->
                                 
 
                                 <div class="product-label form-group">
                                     <div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
-                                        <span class="price-new" itemprop="price">$114.00</span>
-                                        <span class="price-old">$122.00</span>
+                                        {% if product.price_disc %}
+                                            <span class="price-new" itemprop="price">{{ product.price }} сомов</span>
+                                            <span class="price-old">{{ product.price_disc }} сомов</span>
+                                        {% else %}
+                                            <span class="price-new" itemprop="price">{{ product.price }} сомов</span>
+                                        {% endif %}
                                     </div>
-                                    <div class="stock"><span>Availability:</span> <span class="status-stock">In Stock</span></div>
+                                    <div class="stock"><span>В наличии:</span>
+                                        {% if product.new == True %}
+                                            <span class="status-stock">В наличии</span>
+                                        {% else %}
+                                            <span>Нету в наличии</span>
+                                        {% endif %}
+                                        </div>
                                 </div>
 
-                                <div class="product-box-desc">
-                                    <div class="inner-box-desc">
-                                        <div class="price-tax"><span>Ex Tax:</span> $60.00</div>
-                                        <div class="reward"><span>Price in reward points:</span> 400</div>
-                                        <div class="brand"><span>Brand:</span><a href="product-v2.html#">Apple</a>     </div>
-                                        <div class="model"><span>Bestproduct Code:</span> Bestproduct 15</div>
-                                        <div class="reward"><span>Reward Points:</span> 100</div>
-                                    </div>
-                                </div>
+                               
 
                                 <div class="short_description form-group">
-                                    <h4>OverView</h4>
-                                    The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provid...
+                                    <h4>Описание продукта:</h4>
+                                    {{ product.description }}
                                 </div>
                                 <div id="product">
 
                                     <div class="form-group box-info-product">
+                                        <form action="{% url 'cart:cart_add' product.id %}" method="POST">
                                         <div class="option quantity">
                                             <div class="input-group quantity-control" unselectable="on" style="-webkit-user-select: none;">
-                                                <label>Qty</label>
+                                                <label>Количество</label>
                                                 <input class="form-control" type="text" name="quantity"
                                                 value="1">
                                                 <input type="hidden" name="product_id" value="50">
                                                 <span class="input-group-addon product_quantity_down">−</span>
                                                 <span class="input-group-addon product_quantity_up">+</span>
+                                                {{ cart_product_form }}
+                                                {% csrf_token %}
+                                                <input type="submit" value="+ В корзину">
                                             </div>
                                         </div>
+                                        </form>
                                         <div class="cart">
-                                            <input type="button" data-toggle="tooltip" title="" value="В корзину" data-loading-text="Loading..." id="button-cart" class="btn btn-mega btn-lg" onclick="cart.add('42', '1');" data-original-title="В корзину">
+                                            <input type="submit" data-toggle="tooltip" title="" value="В корзину" data-loading-text="Loading..." id="button-cart" class="btn btn-mega btn-lg" onclick="cart.add('42', '1');" data-original-title="В корзину">
                                         </div>
-
                                     </div>
 
                                 </div>
@@ -92,7 +98,7 @@
                         </ul>
                         <div class="tab-content col-xs-12">
                             <div id="tab-1" class="tab-pane fade active in">
-                                <p>Двигатель BMW S54B32 — более производительная и высоко-оборотистая версия мотора в отличии от S52, которая устанавливалась на BMW M3 в кузове E46, в том числе и на родстеры/купе Z3M и Z4M. Мотор BMW S54B32 стал лучшим двигателем в Международном конкурсе силовых агрегатов в 2001 году в категории «от 3.0 до 4.0 литров», и ежегодно до 2006 года был признан лучшим в этой номинации. В 2001 году он так же вошел в список «10 лучших двигателей Уорд» и находился в нем до конца 2004 года.</p>
+                                <p>{{ product.description }}</p>
                                 
                             </div>
                         </div>
@@ -100,190 +106,7 @@
                 </div>
                 <!-- //Bestproduct Tabs -->
                 
-                <!-- Related Bestproducts -->
-                <div class="related titleLine products-list grid module ">
-                    <h3 class="modtitle">Related Bestproducts  </h3>
-            
-                    <div class="releate-products yt-content-slider products-list" data-rtl="no" data-loop="yes" data-autoplay="no" data-autoheight="no" data-autowidth="no" data-delay="4" data-speed="0.6" data-margin="30" data-items_column00="4" data-items_column0="4" data-items_column1="3" data-items_column2="2" data-items_column3="2" data-items_column4="1" data-arrows="yes" data-pagination="no" data-lazyload="yes" data-hoverpause="yes">
-                            <div class="product-layout product-grid">                                               
-                                <div class="product-item-container item--static">
-                                    <div class="left-block">
-                                        <div class="product-image-container second_img">
-                                            <a href="product.html" target="_self" title="Volup tatem accu">
-                                                <img src="image/catalog/demo/product/270/1.jpg" class="img-1 img-responsive" alt="image1">
-                                                <img src="image/catalog/demo/product/270/2.jpg" class="img-2 img-responsive" alt="image2">
-                                            </a>
-                                        </div>
-                                        <span class="label-product label-new">New </span>
-                                        <!--quickview--> 
-                                        <div class="so-quickview">
-                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
-                                        </div>                                                     
-                                        <!--end quickview-->
-                                    </div>
-                                    <div class="right-block">
-                                        <div class="button-group cartinfo--static">
-                                            <button type="button" class="addToCart" title="В корзину" onclick="cart.add('60 ');">
-                                                <span>В корзину </span>   
-                                            </button>                                                   
-                                        </div>
-                                        <h4><a href="product.html" title="Volup tatem accu" target="_self">Volup tatem accu</a></h4>
-                                        <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                        </div>
-                                        <div class="price">
-                                          <span class="price">$48.00</span>
-                                        </div>
-                                    </div>                                            
-                                </div>                                            
-                            </div>
-                            <div class="product-layout product-grid">                                                 
-                                <div class="product-item-container item--static">
-                                    <div class="left-block">
-                                        <div class="product-image-container second_img">
-                                            <a href="product.html" target="_self" title="DPicanha porkcho">
-                                                <img src="image/catalog/demo/product/270/2.jpg" class="img-1 img-responsive" alt="image1">
-                                                <img src="image/catalog/demo/product/270/3.jpg" class="img-2 img-responsive" alt="image2">
-                                            </a>
-                                        </div>
-                                        
-                                        <!--quickview--> 
-                                        <div class="so-quickview">
-                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
-                                        </div>                                                     
-                                        <!--end quickview-->
-                                    </div>
-                                    <div class="right-block">
-                                        <div class="button-group cartinfo--static">
-                                            <button type="button" class="addToCart" title="В корзину" onclick="cart.add('60 ');">
-                                                <span>В корзину </span>   
-                                            </button>                                                  
-                                        </div>
-                                        <h4><a href="product.html" title="Picanha porkcho" target="_self">Picanha porkcho</a></h4>
-                                        <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                        </div>
-                                        <div class="price">
-                                          <span class="price">$89.00</span>
-                                        </div>
-                                    </div>
-                                </div>                                         
-                            </div>
-                            <div class="product-layout product-grid">                                                 
-                                <div class="product-item-container item--static">
-                                    <div class="left-block">
-                                        <div class="product-image-container second_img">
-                                            <a href="product.html" target="_self" title="Stickrum bresao">
-                                                <img src="image/catalog/demo/product/270/3.jpg" class="img-1 img-responsive" alt="image1">
-                                                <img src="image/catalog/demo/product/270/4.jpg" class="img-2 img-responsive" alt="image2">
-                                            </a>
-                                        </div>
-                                        <span class="label-product label-sale">-11%</span>
-                                        <!--quickview--> 
-                                        <div class="so-quickview">
-                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
-                                        </div>                                                     
-                                        <!--end quickview-->
-                                    </div>
-                                    <div class="right-block">
-                                        <div class="button-group cartinfo--static">
-                                            <button type="button" class="addToCart" title="В корзину" onclick="cart.add('60 ');">
-                                                <span>В корзину </span>   
-                                            </button>                                                  
-                                        </div>
-                                        <h4><a href="product.html" title="Stickrum bresao" target="_self">Stickrum bresao</a></h4>
-                                        <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                        </div>
-                                        <div class="price">
-                                            <span class="price-new">$85.00</span>
-                                            <span class="price-old">$96.00</span>
-                                        </div>
-                                    </div>
-                                </div>                                            
-                            </div>
-                            <div class="product-layout product-grid">                                                
-                                <div class="product-item-container item--static">
-                                    <div class="left-block">
-                                        <div class="product-image-container second_img">
-                                            <a href="product.html" target="_self" title="Shoulder kevinis">
-                                                <img src="image/catalog/demo/product/270/4.jpg" class="img-1 img-responsive" alt="image1">
-                                                <img src="image/catalog/demo/product/270/5.jpg" class="img-2 img-responsive" alt="image2">
-                                            </a>
-                                        </div>
-                              
-                                        <!--quickview--> 
-                                        <div class="so-quickview">
-                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
-                                        </div>                                                     
-                                        <!--end quickview-->
-                                    </div>
-                                    <div class="right-block">
-                                        <div class="button-group cartinfo--static">
-                                            <button type="button" class="addToCart" title="В корзину" onclick="cart.add('60 ');">
-                                                <span>В корзину </span>   
-                                            </button>                                                  
-                                        </div>
-                                        <h4><a href="product.html" title="Shoulder kevinis" target="_self">Shoulder kevinis</a></h4>
-                                        <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                        </div>
-                                        <div class="price">
-                                          <span class="price">$60.00</span>
-                                        </div>
-                                    </div>
-                                    
-                                </div>                                             
-                            </div>
-                            <div class="product-layout product-grid">                                             
-                                <div class="product-item-container item--static">
-                                    <div class="left-block">
-                                        <div class="product-image-container second_img">
-                                            <a href="product.html" target="_self" title="Remporum stick">
-                                                <img src="image/catalog/demo/product/270/5.jpg" class="img-1 img-responsive" alt="image1">
-                                                <img src="image/catalog/demo/product/270/6.jpg" class="img-2 img-responsive" alt="image2">
-                                            </a>
-                                        </div>
-                                        <span class="label-product label-new">New</span>
-                                        <!--quickview--> 
-                                        <div class="so-quickview">
-                                          <a class="iframe-link btn-button quickview quickview_handler visible-lg" href="quickview.html" title="Quick view" data-fancybox-type="iframe"><i class="fa fa-search"></i><span>Quick view</span></a>
-                                        </div>                                                     
-                                        <!--end quickview-->
-                                    </div>
-                                    <div class="right-block">
-                                        <div class="button-group cartinfo--static">>
-                                            <button type="button" class="addToCart" title="В корзину" onclick="cart.add('60 ');">
-                                                <span>В корзину </span>   
-                                            </button>                                                 
-                                        </div>
-                                        <h4><a href="product.html" title="Remporum stick" target="_self">Remporum stick</a></h4>
-                                        <div class="rating">    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                        </div>
-                                        <div class="price">
-                                          <span class="price">$65.00</span>
-                                        </div>
-                                    </div>
-                                </div>                                           
-                            </div>
-                    </div>
-                </div>
+                
 
                 <!-- end Related  Bestproducts-->
 
@@ -295,222 +118,17 @@
             <!--Left Part Start -->
             <aside class="col-sm-4 col-md-3 content-aside" id="column-left">
                 <div class="module category-style">
-                    <h3 class="modtitle">Categories</h3>
+                    <h3 class="modtitle">Категории</h3>
                     <div class="modcontent">
                         <div class="box-category">
+                            {% for brand in brands %}
                             <ul id="cat_accordion" class="list-group">
-                                <li class="hadchild"><a href="category.html" class="cutom-parent">Smartphone & Tablets</a>   <span class="button-view  fa fa-plus-square-o"></span>
-                                    <ul style="display: block;">
-                                        <li><a href="category.html">Men's Watches</a></li>
-                                        <li><a href="category.html">Women's Watches</a></li>
-                                        <li><a href="category.html">Kids' Watches</a></li>
-                                        <li><a href="category.html">Accessories</a></li>
-                                    </ul>
-                                </li>
-                                <li class="hadchild"><a class="cutom-parent" href="category.html">Electronics</a>   <span class="button-view  fa fa-plus-square-o"></span>
-                                    <ul style="display: none;">
-                                        <li><a href="category.html">Cycling</a></li>
-                                        <li><a href="category.html">Running</a></li>
-                                        <li><a href="category.html">Swimming</a></li>
-                                        <li><a href="category.html">Football</a></li>
-                                        <li><a href="category.html">Golf</a></li>
-                                        <li><a href="category.html">Windsurfing</a></li>
-                                    </ul>
-                                </li>
-                                <li class="hadchild"><a href="category.html" class="cutom-parent">Shoes</a>   <span class="button-view  fa fa-plus-square-o"></span>
-                                    <ul style="display: none;">
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li class="hadchild"><a href="category.html" class="cutom-parent">Watches</a>  <span class="button-view  fa fa-plus-square-o"></span>
-                                    <ul style="display: none;">
-                                        <li><a href="category.html">Men's Watches</a></li>
-                                        <li><a href="category.html">Women's Watches</a></li>
-                                        <li><a href="category.html">Kids' Watches</a></li>
-                                        <li><a href="category.html">Accessories</a></li>
-                                    </ul>
-                                </li>
-                                <li class="hadchild"><a href="category.html" class="cutom-parent">Jewellery</a>    <span class="button-view  fa fa-plus-square-o"></span>
-                                    <ul style="display: none;">
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                        <li><a href="category.html">Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li class=""><a href="category.html" class="cutom-parent">Health &amp; Beauty</a>  <span class="dcjq-icon"></span></li>
-                                <li class=""><a href="category.html" class="cutom-parent">Kids &amp; Babies</a>    <span class="dcjq-icon"></span></li>
-                                <li class=""><a href="category.html" class="cutom-parent">Sports</a>  <span class="dcjq-icon"></span></li>
-                                <li class=""><a href="category.html" class="cutom-parent">Home &amp; Garden</a><span class="dcjq-icon"></span></li>
-                                <li class=""><a href="category.html" class="cutom-parent">Wines &amp; Spirits</a>  <span class="dcjq-icon"></span></li>
+                                <li class=""><a href="{% url 'main:automodels' brand.id %}" class="cutom-parent">{{ brand.name }}</a>  <span class="dcjq-icon"></span></li>
                             </ul>
+                            {% endfor %}
                         </div>
                         
                         
-                    </div>
-                </div>
-                <div class="module product-simple">
-                    <h3 class="modtitle">
-                        <span>Latest products</span>
-                    </h3>
-                    <div class="modcontent">
-                        <div class="so-extraslider" >
-                            <!-- Begin extraslider-inner -->
-                            <div class=" extraslider-inner">
-                                <div class="item ">
-                                    <div class="product-layout item-inner style1 ">
-                                        <div class="item-image">
-                                            <div class="item-img-info">
-                                                <a href="product-v2.html#" target="_self" title="Mandouille short ">
-                                                    <img src="image/catalog/demo/product/80/1.jpg" alt="Mandouille short">
-                                                    </a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="item-title">
-                                                <a href="product-v2.html#" target="_self" title="Mandouille short">Mandouille short </a>
-                                            </div>
-                                            <div class="rating">
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                            </div>
-                                            <div class="content_price price">
-                                                <span class="price-new product-price">$55.00 </span>&nbsp;&nbsp;
-
-                                                <span class="price-old">$76.00 </span>&nbsp;
-
-                                            </div>
-                                        </div>
-                                        <!-- End item-info -->
-                                        <!-- End item-wrap-inner -->
-                                    </div>
-                                    <!-- End item-wrap -->
-                                    <div class="product-layout item-inner style1 ">
-                                        <div class="item-image">
-                                            <div class="item-img-info">
-                                                <a href="product-v2.html#" target="_self" title="Xancetta bresao ">
-                                                        <img src="image/catalog/demo/product/80/2.jpg" alt="Xancetta bresao">
-                                                        </a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="item-title">
-                                                <a href="product-v2.html#" target="_self" title="Xancetta bresao">
-                                                            Xancetta bresao 
-                                                        </a>
-                                            </div>
-                                            <div class="rating">
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                            </div>
-                                            <div class="content_price price">
-                                                <span class="price-new product-price">$80.00 </span>&nbsp;&nbsp;
-
-                                                <span class="price-old">$89.00 </span>&nbsp;
-
-
-
-                                            </div>
-                                        </div>
-                                        <!-- End item-info -->
-                                        <!-- End item-wrap-inner -->
-                                    </div>
-                                    <!-- End item-wrap -->
-                                    <div class="product-layout item-inner style1 ">
-                                        <div class="item-image">
-                                            <div class="item-img-info">
-                                                <a href="product-v2.html#" target="_self" title="Sausage cowbee ">
-                                                            <img src="https://demo.smartaddons.com/templates/html/autoparts/image/catalog/demo/product/80/3.jpg" alt="Sausage cowbee">
-                                                            </a>
-                                            </div>
-                                           
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="item-title">
-                                                <a href="product-v2.html#" target="_self" title="Sausage cowbee">
-                                                            Sausage cowbee 
-                                                        </a>
-                                            </div>
-                                            <div class="rating">
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                            </div>
-                                           
-                                            <div class="content_price price">
-                                                <span class="price product-price">
-                                                                $66.00 
-                                                            </span>
-                                            </div>
-                                        </div>
-                                        <!-- End item-info -->
-                                        <!-- End item-wrap-inner -->
-                                    </div>
-                                    <!-- End item-wrap -->
-                                    <div class="product-layout item-inner style1 ">
-                                        <div class="item-image">
-                                            <div class="item-img-info">
-                                                <a href="product-v2.html#" target="_self" title="Chicken swinesha ">
-                                                                <img src="https://demo.smartaddons.com/templates/html/autoparts/image/catalog/demo/product/80/4.jpg" alt="Chicken swinesha">
-                                                                </a>
-                                            </div>
-                                           
-                                        </div>
-                                        <div class="item-info">
-                                            <div class="item-title">
-                                                <a href="product-v2.html#" target="_self" title="Chicken swinesha">
-                                                            Chicken swinesha 
-                                                        </a>
-                                            </div>
-                                            <div class="rating">
-                                                <span class="fa fa-stack">
-                                                                    <i class="fa fa-star fa-stack-2x"></i>
-                                                                </span>
-                                                <span class="fa fa-stack">
-                                                                    <i class="fa fa-star fa-stack-2x"></i>
-                                                                </span>
-                                                <span class="fa fa-stack">
-                                                                    <i class="fa fa-star fa-stack-2x"></i>
-                                                                </span>
-                                                <span class="fa fa-stack">
-                                                                    <i class="fa fa-star fa-stack-2x"></i>
-                                                                </span>
-                                                <span class="fa fa-stack">
-                                                                    <i class="fa fa-star fa-stack-2x"></i>
-                                                                </span>
-                                            </div>
-                                            <div class="content_price price">
-                                                <span class="price-new product-price">$45.00 </span>&nbsp;&nbsp;
-
-                                                <span class="price-old">$56.00 </span>&nbsp;
-
-
-
-                                            </div>
-                                        </div>
-                                        <!-- End item-info -->
-                                        <!-- End item-wrap-inner -->
-                                    </div>
-                                    <!-- End item-wrap -->
-                                </div>
-                            </div>
-                            <!--End extraslider-inner -->
-                        </div>
                     </div>
                 </div>
             </aside>

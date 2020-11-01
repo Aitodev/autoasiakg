@@ -26,6 +26,7 @@ class Subcategory1(models.Model):
 
 class Brand(models.Model):
     name = models.CharField(max_length=100)
+    img = models.ImageField(verbose_name='Изображение', upload_to='static/img/bestproduct/', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -75,8 +76,23 @@ class Product(models.Model):
     img = models.ImageField(verbose_name='Изображение', upload_to='static/img/bestproduct/', blank=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Цена', default=0)
     price_disc = models.DecimalField(verbose_name='Цена со скидкой', max_digits=7, decimal_places=2, null=True, blank=True)
-    new = models.BooleanField(verbose_name='Новый товар', default=False)
+    new = models.BooleanField(verbose_name='В наличии', default=False)
+    best_product = models.BooleanField(verbose_name='Лучший продукт(продаваемый)' ,default=False)
     date = models.DateTimeField(verbose_name='Дата добавления', auto_now_add=True)
 
     def __str__(self):
         return self.name
+
+
+class Applications(models.Model):
+    name = models.CharField(verbose_name='Имя', max_length=200)
+    mail = models.CharField(verbose_name='Почта', max_length=200)
+    phone = models.CharField(verbose_name='Номер телефона', max_length=200)
+    date = models.DateTimeField(verbose_name='Дата', auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.mail
+
+    class Meta:
+        verbose_name = 'Заявка cо страницы контактов'
+        verbose_name_plural = 'Заявка со страницы контактов'
