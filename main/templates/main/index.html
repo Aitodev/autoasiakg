@@ -115,7 +115,10 @@
                 {% for brand in brands %}
                   <div class="card" style="width: 18px;">
                     <a href="{% url 'main:automodels' brand.id %}">
+                        {% if brand.img %}
                         <img class="card-img-top" src="{{ brand.img.url }}" alt="Card image cap" style="width: 55%; text-align: center"></a>
+                        }
+                        {% endif %}
                     <div class="card-body">
                     <a href="{% url 'main:automodels' brand.id %}" style="text-align: center"><h5 class="card-title">{{ brand.name }}</h5></a>
                     </div>
