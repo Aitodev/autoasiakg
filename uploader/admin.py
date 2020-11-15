@@ -99,6 +99,40 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                         else:
                                             Product.objects.create(name=name, description=description, product_code=code, category=category, price=price, manufacturer=manufacturer,
                                                                    subcategory=subcategory, subcategory1=subcategory1, brand=brand, automodel=automodel)
+                                        # LOOKS LIKE THE EXCEL FILE IS WRONG !!!
+                                        automodels_2 = []
+                                        if sh.row(i)[11].value:
+                                            if Brand.objects.filter(name=sh.row(i)[11].value).exists():
+                                                brand = Brand.objects.filter(name=sh.row(i)[11].value).first()
+                                            else:
+                                                brand = Brand.objects.create(name=sh.row(i)[11].value)
+                                        if sh.row(i)[12].value:
+                                            if Automodel.objects.filter(name=sh.row(i)[12].value).exists():
+                                                automodel = Automodel.objects.filter(name=sh.row(i)[12].value).first()
+                                            else:
+                                                automodel = Automodel.objects.create(name=sh.row(i)[12].value, brand=brand)
+                                            automodels_2.append(automodel)
+                                        if sh.row(i)[13].value:
+                                            if Automodel.objects.filter(name=sh.row(i)[13].value).exists():
+                                                automodel = Automodel.objects.filter(name=sh.row(i)[13].value).first()
+                                            else:
+                                                automodel = Automodel.objects.create(name=sh.row(i)[13].value, automodel=brand)
+                                            automodels_2.append(automodel)
+                                        if sh.row(i)[14].value:
+                                            if Automodel.objects.filter(name=sh.row(i)[14].value).exists():
+                                                automodel = Automodel.objects.filter(name=sh.row(i)[14].value).first()
+                                            else:
+                                                automodel = Automodel.objects.create(name=sh.row(i)[14].value, automodel1=brand)
+                                            automodels_2.append(automodel)
+                                        if sh.row(i)[15].value:
+                                            if Manufacturer.objects.filter(name=sh.row(i)[15].value).exists():
+                                                manufacturer = Manufacturer.objects.filter(name=sh.row(i)[15].value).first()
+                                            else:
+                                                manufacturer = Manufacturer.objects.create(name=sh.row(i)[15].value)
+                                        for automodel in automodels_2:
+                                            Product.objects.create(name=name, description=description, product_code=code, price=price,
+                                                                   manufacturer=manufacturer, subcategory=subcategory, category=category,
+                                                                   brand=brand, automodel=automodel, subcategory1=subcategory1)
                     except Exception as e:
                         raise e
                 elif str(file).split('.')[-1] == 'csv':
@@ -165,7 +199,7 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                 else:
                                     Product.objects.create(name=name, description=description, product_code=code, category=category, price=price, automodel=automodel,
                                                            manufacturer=manufacturer, subcategory=subcategory, subcategory1=subcategory1, brand=brand)
-        return redirect("..")
+            return redirect("..")
 
 
 admin.site.register(UploadModel, CsvUploadAdmin)
