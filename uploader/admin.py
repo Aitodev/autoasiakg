@@ -116,13 +116,13 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                             if Automodel.objects.filter(name=sh.row(i)[13].value).exists():
                                                 automodel = Automodel.objects.filter(name=sh.row(i)[13].value).first()
                                             else:
-                                                automodel = Automodel.objects.create(name=sh.row(i)[13].value, automodel=brand)
+                                                automodel = Automodel.objects.create(name=sh.row(i)[13].value, brand=brand)
                                             automodels_2.append(automodel)
                                         if sh.row(i)[14].value:
                                             if Automodel.objects.filter(name=sh.row(i)[14].value).exists():
                                                 automodel = Automodel.objects.filter(name=sh.row(i)[14].value).first()
                                             else:
-                                                automodel = Automodel.objects.create(name=sh.row(i)[14].value, automodel1=brand)
+                                                automodel = Automodel.objects.create(name=sh.row(i)[14].value, brand=brand)
                                             automodels_2.append(automodel)
                                         if sh.row(i)[15].value:
                                             if Manufacturer.objects.filter(name=sh.row(i)[15].value).exists():
