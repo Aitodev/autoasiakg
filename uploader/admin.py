@@ -80,7 +80,7 @@ class CsvUploadAdmin(admin.ModelAdmin):
                                                 automodel = Automodel.objects.filter(name=automodel_str).first()
                                             else:
                                                 automodel = Automodel.objects.create(name=automodel_str, brand=brand)
-                                        automodels.append(automodel)
+                                            automodels.append(automodel)
                                     if 'manufacturer' in keys and sh.row(i)[keys['manufacturer']].value:
                                         manufacturer_str = str(sh.row(i)[keys['manufacturer']].value).strip()
                                         if Manufacturer.objects.filter(name=manufacturer_str).exists():
